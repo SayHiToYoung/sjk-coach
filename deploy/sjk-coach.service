@@ -1,0 +1,34 @@
+[Unit]
+Description=明天要用 · 学习教练
+Documentation=https://github.com/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/sjk-coach
+EnvironmentFile=/opt/sjk-coach/.env
+ExecStart=/usr/local/bin/node src/server.js
+
+# 以非 root 运行，同时允许绑定 80 端口
+User=sjk
+Group=sjk
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+
+Restart=always
+RestartSec=3
+
+# 基础加固
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sjk-coach
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=sjk-coach
+
+[Install]
+WantedBy=multi-user.target

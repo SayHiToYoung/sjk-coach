@@ -1,3 +1,14 @@
 .env
 node_modules/
 *.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
