@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    image: sjk-coach:latest
+    container_name: sjk-coach
+    restart: always
+    # 直接对外：宿主机 80 → 容器 5173。
+    # 若前面要挂 Nginx 做 HTTPS，把下面这行换成 "127.0.0.1:5173:5173"，只对本机开放。
+    ports:
+      - "80:5173"
+    # 密钥从服务器上的 .env 读取，不进镜像、不进 Git
+    env_file:
+      - .env
+    environment:
+      PORT: "5173"
+      NODE_ENV: production
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

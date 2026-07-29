@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="三节课">
+  <!-- 照着官方 logo 描的近似云形标记。拿到官方 SVG/PNG 后直接覆盖本文件即可，
+       页头与页脚两处引用同一个文件，无需改动 HTML。 -->
+  <g fill="#1A7AE0">
+    <circle cx="26" cy="22" r="12"/>
+    <circle cx="16" cy="29" r="9"/>
+    <circle cx="36" cy="29" r="8"/>
+    <rect x="14" y="29" width="24" height="9" rx="4.5"/>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "name": "sjk-jit-coach",
+  "version": "0.1.0",
+  "description": "明天要用 · 学习教练 — 基于三节课企业版 API 的即时学习路径产品",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node src/server.js",
+    "demo": "MOCK=1 node src/server.js"
+  }
+}

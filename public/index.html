@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1A7AE0">
+<title>明天要用 · 学习教练</title>
+<link rel="icon" href="/brand/sanjieke.svg">
+<!-- 字体非阻塞加载：Google Fonts 在国内常不可达，先用系统字体渲染，取到再升级 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+SC:wght@400;500;600&display=swap"
+      rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- ── 品牌栏 ───────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar__in">
+    <a class="brand" href="https://www.sanjieke.cn" target="_blank" rel="noopener">
+      <img class="brand__mark" src="/brand/sanjieke.svg" alt="三节课" width="26" height="26">
+      <span class="brand__name">三节课</span>
+    </a>
+    <span class="topbar__div" aria-hidden="true"></span>
+    <span class="topbar__app">企业版 · 学习教练</span>
+    <dl class="meta" id="meta">
+      <div><dt>数据源</dt><dd id="meta-src">连接中</dd></div>
+      <div><dt>规划器</dt><dd id="meta-llm">—</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="masthead__title">
+      <h1>明天要用</h1>
+      <p class="masthead__sub">把一件马上要做的事，换成三节能立刻用上的课</p>
+    </div>
+  </header>
+
+  <!-- 工单：像填一张单子，而不是像用一个搜索框 -->
+  <form class="order" id="form">
+    <div class="field field--main">
+      <label for="task">这周你绕不过去的那件事</label>
+      <textarea id="task" rows="3" maxlength="200"
+        placeholder="例：周四要给业务方讲新功能上线两周的数据，我怕讲完他们只记住一堆数字，记不住结论"></textarea>
+      <div class="field__hint"><span id="count">0</span>/200 · 写得越具体，路径越准</div>
+    </div>
+
+    <div class="field">
+      <label for="role">你的角色</label>
+      <input id="role" type="text" maxlength="30" placeholder="例：产品经理 / 带 5 人小组">
+    </div>
+
+    <div class="field field--budget">
+      <label>时间预算</label>
+      <div class="budget">
+        每天 <input id="mpd" type="number" min="5" max="120" step="5" value="20"> 分钟
+        <span class="budget__x">×</span>
+        <input id="days" type="number" min="1" max="10" value="3"> 天
+        <em class="budget__total">合计 <b id="total">60</b> 分钟</em>
+      </div>
+    </div>
+
+    <button type="submit" id="go">排出路径</button>
+  </form>
+
+  <div class="status" id="status" hidden></div>
+
+  <!-- 结果 -->
+  <section class="plan" id="plan" hidden>
+    <div class="plan__goal">
+      <span class="eyebrow">学完你能做到</span>
+      <p id="goal"></p>
+      <ul class="chips" id="chips"></ul>
+    </div>
+
+    <div id="days-wrap"></div>
+
+    <section class="deliverable" id="deliverable">
+      <span class="eyebrow">学完要交出去的东西</span>
+      <h3 id="deliv-title"></h3>
+      <ol class="ruled" id="deliv-outline"></ol>
+    </section>
+
+    <div class="plan__foot">
+      <button type="button" id="refresh">对一下学习进度</button>
+      <p class="sources" id="sources"></p>
+    </div>
+  </section>
+
+</div>
+
+<!-- ── 版权栏 ───────────────────────────────────────── -->
+<footer class="sitefoot">
+  <div class="sitefoot__in">
+    <div class="sitefoot__by">
+      <span class="sitefoot__bylabel">Powered by</span>
+      <img class="brand__mark brand__mark--mono" src="/brand/sanjieke.svg" alt="" width="22" height="22">
+      <span class="sitefoot__byname">三节课</span>
+    </div>
+    <div class="sitefoot__legal">
+      <p>2013-2026 三节课信息咨询（北京）有限公司 版权所有</p>
+      <!-- 用户协议 / 隐私政策：拿到正式地址后换成 <a href="…" target="_blank" rel="noopener"> -->
+      <p>京公网安备 11010802021751号 <i>｜</i> ICP证：京B2-20241151 <i>｜</i> 用户协议 <i>｜</i> 隐私政策</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>
