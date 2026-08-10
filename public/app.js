@@ -82,7 +82,7 @@ function render(plan) {
 
   $('sources').textContent =
     `检索 ${plan.courses.length} 门课 / 拆出 ${plan.poolSize} 节可选素材 / 选中 ${plan.days.reduce((a, d) => a + d.steps.length, 0)} 节 · ` +
-    `course/list · course/catalog · study_data/student_section_finish · oauth/custom`;
+    `course/list · course/catalog · study_data/student_section_finish`;
 
   $('plan').hidden = false;
   hoverLink();
@@ -112,7 +112,7 @@ function step(s, di, si) {
     <p class="step__from">${esc(s.courseTitle)}${s.chapter ? ' · ' + esc(s.chapter) : ''}</p>
     ${s.why ? `<p class="step__why">${esc(s.why)}</p>` : ''}
     ${s.action ? `<p class="step__do"><b>学完立刻做</b>${esc(s.action)}</p>` : ''}
-    <a class="step__go" href="${esc(s.openUrl)}" target="_blank" rel="noopener">直接打开这一节 →</a>
+    <a class="step__go" href="${esc(s.studyUrl)}" target="_blank" rel="noopener">直接打开这一节 →</a>
   </article>`;
 }
 

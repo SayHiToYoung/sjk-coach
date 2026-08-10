@@ -31,8 +31,9 @@ npm run demo
 | 按关键词检索课程 | `GET /coop-api/v3/course/list` |
 | 拆出节级学习单元 | `GET /coop-api/v3/course/catalog` |
 | 节级完成状态回流 | `GET /coop-api/v3/study_data/student_section_finish` |
-| 免密直达指定节 | `/oauth/custom`（简化版认证 V2） |
 | 显式加入课程（备用） | `POST /coop-api/v3/course/student` |
+
+直达指定节走的是平台自己的上课页 `/study/0/{courseId}/{nodeId}`。本产品是挂在企业版首页里的功能模块，用户此时已经登录，浏览器带着现成的登录态，所以只负责把人送到那一节，不涉及任何免密换票。
 
 ## 代码结构
 
@@ -47,7 +48,7 @@ public/          前端
 
 ## 实现时踩到的几个点
 
-**签名字段范围。** 开放 API 只有 `appId`、`signType`、`timestamp` 三个字段参与签名，任何 query 参数和请求体都不参与。SSO 链接则是另一套字段，按 ASCII 升序拼接，`fromUri` 用原值参与签名、URL encode 后拼进地址。两处容易混。
+**签名字段范围。** 开放 API 只有 `appId`、`signType`、`timestamp` 三个字段参与签名，任何 query 参数和请求体都不参与。
 
 **图文和测试题没有时长。** `videoDuration` 只对视频有值，图文与测试题为 0。直接拿来做时间预算会严重失真，`estimateMinutes()` 按内容类型给了经验值。
 

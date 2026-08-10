@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SjkClient } from './sjk.js';
 import { makePlan } from './planner.js';
-import { ssoUrl, studyUrl } from './sign.js';
+import { studyUrl } from './sign.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -48,21 +48,14 @@ const readBody = req => new Promise((resolve, reject) => {
   req.on('end', () => { try { resolve(b ? JSON.parse(b) : {}); } catch (e) { reject(e); } });
 });
 
-/** 给每一步生成免密直达链接；缺少密钥时退回普通上课页地址 */
-function attachLinks(plan, openid) {
+/**
+ * 给每一步补上上课页地址。
+ * 这是挂在平台首页里的功能，用户已经登录，浏览器带着现成的登录态，
+ * 所以只负责把人送到对应的那一节，不再生成 SSO 免密链接。
+ */
+function attachLinks(plan) {
   for (const d of plan.days) {
-    for (const s of d.steps) {
-      const target = studyUrl(cfg.domain, s.courseId, s.nodeId);
-      s.studyUrl = target;
-      s.openUrl = (cfg.appId && cfg.appSecret)
-        ? ssoUrl({
-            domain: cfg.domain, appId: cfg.appId, appSecret: cfg.appSecret,
-            signType: cfg.signType, openid,
-            fromUri: encodeURIComponent(target),
-            expires: 7 * 24 * 3600 * 1000,
-          })
-        : target;
-    }
+    for (const s of d.steps) s.studyUrl = studyUrl(cfg.domain, s.courseId, s.nodeId);
   }
   return plan;
 }
@@ -71,7 +64,6 @@ const routes = {
   'GET /api/config': async (_req, res) => send(res, 200, {
     mock: client.mock,
     hasLLM: Boolean(cfg.llmApiKey),
-    ssoEnabled: Boolean(cfg.appId && cfg.appSecret),
     domain: cfg.domain,
     openid: cfg.demoOpenid,
   }),
@@ -88,7 +80,7 @@ const routes = {
     try {
       const plan = await makePlan({ client, cfg, task, minutesPerDay, days, role: b.role });
       // 注意：不要往结果里塞名为 days 的数字，会覆盖 plan.days 这个数组
-      send(res, 200, attachLinks({ ...plan, task, minutesPerDay, dayBudget: days, openid }, openid));
+      send(res, 200, attachLinks({ ...plan, task, minutesPerDay, dayBudget: days, openid }));
     } catch (e) {
       send(res, e.code === 'EMPTY_POOL' ? 404 : 502, { error: e.message });
     }
